@@ -78,8 +78,153 @@ EPI_data <- read.csv("/Users/madeline/Documents/Grad School Sem2/Data Analytics/
 setwd("/Users/madeline/Documents/Grad School Sem2/Data Analytics/")
 View(EPI_data)
 attach(EPI_data)
-fix$EPI(EPI)
+fix(EPI_data.EPI)
+EPI_data$EPI
 tf <- is.na(EPI) #records True values if the value is NA
 E <- EPI[!tf] #filters out NA values, new array
 
+#Exercise 1
+summary(EPI_data$EPI)
+fivenum(EPI_data$EPI, na.rm=TRUE)
+stem(EPI_data$EPI)
+hist(EPI_data$EPI)
+hist(EPI_data$EPI, seq(30., 95., 1.0), prob=TRUE)
+lines(density(EPI_data$EPI, na.rm=TRUE, bw=1.)) #or try bw="SJ"
+rug(EPI_data$EPI)
+#Use help()
 
+#Exercise 1: Fitting a distribution beyond histograms
+plot(ecdf(EPI_data$EPI), do.points=FALSE, verticals=TRUE)
+par(pty="s")
+qqnorm(EPI_data$EPI)
+qqline(EPI_data$EPI)
+
+x <- seq(30, 95, 1)
+qqplot(qt(ppoints(250), df=5), x, xlab="Q-Q plot for t dsn")
+qqline(x)
+
+summary(EPI_data$DALY)
+fivenum(EPI_data$DALY, na.rm=TRUE)
+stem(EPI_data$DALY)
+hist(EPI_data$DALY)
+hist(EPI_data$DALY, prob=TRUE)
+lines(density(EPI_data$DALY, na.rm=TRUE, bw="SJ"))
+rug(EPI_data$DALY)
+plot(ecdf(EPI_data$DALY), do.points=FALSE, verticals=TRUE)
+par(pty="s")
+qqnorm(EPI_data$DALY)
+qqline(EPI_data$DALY)
+x <- seq(30, 100, 1)
+qqplot(qt(ppoints(250), df=5), x, xlab="Q-Q plot for t daly")
+qqline(x)
+
+
+summary(EPI_data$AIR_E)
+fivenum(EPI_data$AIR_E, na.rm=TRUE)
+stem(EPI_data$AIR_E)
+hist(EPI_data$AIR_E)
+hist(EPI_data$AIR_E, prob=TRUE)
+lines(density(EPI_data$AIR_E, na.rm=TRUE, bw="SJ"))
+rug(EPI_data$AIR_E)
+plot(ecdf(EPI_data$AIR_E), do.points=FALSE, verticals=TRUE) #applies ecdf distribution
+par(pty="s")
+qqnorm(EPI_data$AIR_E)
+qqline(EPI_data$AIR_E) #applies qq- distributions 
+x <- seq(30, 100, 1)
+qqplot(qt(ppoints(250), df=5), x, xlab="Q-Q plot for t AIR")
+qqline(x)
+
+EPI <- EPI_data$EPI
+
+#Comparing distributions
+boxplot(EPI, DALY)
+qqplot(EPI, DALY)
+
+boxplot(EPI, ENVHEALTH, ECOSYSTEM, DALY, AIR_H, WATER_H, AIR_E, WATER_E, BIODIVERSITY)
+qqplot(EPI, ENVHEALTH)
+qqplot(EPI, ECOSYSTEM)
+qqplot(EPI, AIR_H)
+qqplot(EPI, WATER_H)
+qqplot(EPI, AIR_E)
+qqplot(EPI, WATER_E)
+qqplot(EPI, BIODIVERSITY)
+qqplot(ENVHEALTH, ECOSYSTEM)
+qqplot(ENVHEALTH, DALY)
+qqplot(ENVHEALTH, AIR_H)
+qqplot(ENVHEALTH, WATER_H)
+qqplot(ENVHEALTH, AIR_E)
+qqplot(ENVHEALTH, WATER_E)
+qqplot(ENVHEALTH, BIODIVERSITY) 
+qqplot(ECOSYSTEM, DALY)
+qqplot(ECOSYSTEM, AIR_H)
+qqplot(ECOSYSTEM, WATER_H)
+qqplot(ECOSYSTEM, AIR_E)
+qqplot(ECOSYSTEM, WATER_E)
+qqplot(ECOSYSTEM, BIODIVERSITY)
+qqplot(DALY, AIR_H)
+qqplot(DALY, WATER_H)
+qqplot(DALY, AIR_E)
+qqplot(DALY, WATER_E)
+qqplot(DALY, BIODIVERSITY)
+qqplot(AIR_H, WATER_H)
+qqplot(AIR_H, AIR_E)
+qqplot(AIR_H, WATER_E)
+qqplot(AIR_H, BIODIVERSITY)
+qqplot(WATER_H, AIR_E)
+qqplot(WATER_H, WATER_E)
+qqplot(WATER_H, BIODIVERSITY)
+qqplot(AIR_E, WATER_E)
+qqplot(AIR_E, BIODIVERSITY)
+qqplot(WATER_E, BIODIVERSITY)
+
+#Unsure whether to code anything to note 2010 and 2016 datasets
+
+#Exercise 2: filtering (populations)
+EPILand <- EPI[!Landlock]
+Eland <- EPILand[!is.na(EPILand)]
+hist(Eland)
+hist(Eland, seq(30., 95., 1.0), prob=TRUE)
+
+plot(ecdf(Eland), do.points=FALSE, verticals=TRUE)
+par(pty="s")
+qqnorm(Eland)
+qqline(Eland)
+
+summary(Eland)
+fivenum(Eland, na.rm=TRUE)
+stem(Eland)
+hist(Eland)
+hist(Eland, prob=TRUE)
+lines(density(Eland, na.rm=TRUE, bw="SJ"))
+rug(Eland)
+plot(ecdf(Eland), do.points=FALSE, verticals=TRUE)
+par(pty="s")
+qqnorm(Eland)
+qqline(Eland)
+x <- seq(30, 100, 1)
+qqplot(qt(ppoints(250), df=5), x, xlab="Q-Q plot for Not Landlocked")
+qqline(x)
+
+#No_surface_water filter
+EPISW <- EPI[!No_surface_water]
+Esw <- EPISW[!is.na(EPISW)]
+hist(Esw)
+hist(Esw, seq(30., 95., 1.0), prob=TRUE)
+
+#Desert filter
+EPIDesert <- EPI[!Desert]
+Edesert <- EPIDesert[!is.na(EPIDesert)]
+hist(Edesert)
+hist(Edesert, seq(30., 95., 1.0), prob=TRUE)
+
+#High Population Density filter
+EPIHPD <- EPI[!High_Population_Density]
+Ehpd <- EPIHPD[!is.na(EPIHPD)]
+hist(Ehpd)
+hist(Ehpd, seq(30., 95., 1.0), prob=TRUE)
+
+#Filter on EPI_regions or GEO_subregion
+EPIR <- EPI[!EPI_regions=="East Asia and the Pacific "]
+EPIr <- EPIR[!is.na(EPIR)]
+hist(EPIr)
+hist(EPIr, seq(30., 95., 1.0), prob=TRUE)

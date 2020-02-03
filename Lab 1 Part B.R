@@ -68,8 +68,20 @@ ggplot(mtcars, aes(x=mpg)) + geom_histogram(binwidth=5)
 #Creating box-plot
 plot(ToothGrowth$supp, ToothGrowth$len) #using plot() function and pass it a factor of x-values and a vector of y-values
 #Formula Syntax
-boxplot(len ~ supp, data = ToothGrowth) #if the tow vectors are in the same dataframe, use formula syntax
-
+boxplot(len ~ supp, data = ToothGrowth) #if the two vectors are in the same dataframe, use formula syntax
+#can combine two variables on the x-axis
+#put interaction of two variables on x-axis
+boxplot(len ~ supp + dose, data = ToothGrowth)
+#with ggplot2 you can get the same results above
+library(ggplot2)
+qplot(ToothGrowth$supp, ToothGrowth$len, geom='boxplot')
+#if the two vectors are in the same dataframe:
+qplot(supp, len, data=ToothGrowth, geom="boxplot")
+#equiv to:
+ggplot(ToothGrowth, aes(x=supp, y=len)) + geom_boxplot()
+qplot(interaction(ToothGrowth$supp, ToothGrowth$dose), ToothGrowth$len, geom="boxplot")
+qplot(interaction(supp, dose), len, data=ToothGrowth, geom="boxplot")
+ggplot(ToothGrowth, aes(x=interaction(supp,dose), y=len)) + geom_boxplot()
 
 
 
